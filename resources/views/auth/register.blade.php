@@ -16,11 +16,11 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Email Address -->
+        <!-- Role -->
         <div class="mt-4">
             <x-input-label for="role" :value="__('Role')" />
             <select class="w-100" name="role" id="role">
-                <option value="laywer">Laywer</option>
+                <option value="lawyer">Lawyer</option>
                 <option value="client">Client</option>
             </select>
 
@@ -31,6 +31,12 @@
         <div class="mt-4">
             <x-input-label for="image" :value="__('Image')" />
             <input type="file" id="image" name="image">
+           
+        </div>
+
+        <div class="mt-4"  id="lawyerCardDiv">
+            <x-input-label for="lawyer_card" :value="__('Lawyer Card')" />
+            <input type="file" id="lawyer_card" name="lawyer_card">
            
         </div>
 
@@ -67,4 +73,17 @@
             </x-primary-button>
         </div>
     </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#role').change(function() {
+            if ($(this).val() === 'client') {
+                $('#lawyerCardDiv').hide();
+            } else {
+                $('#lawyerCardDiv').show();
+            }
+        });
+    });
+</script>
 </x-guest-layout>

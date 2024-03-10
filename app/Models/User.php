@@ -25,7 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'image'
+        'image',
     ];
 
 
@@ -50,4 +50,11 @@ class User extends Authenticatable
         'role' => 'string',
         'image' => 'string',
     ];
+
+    public function lawyerDetails()
+    {
+        return $this->hasOne(LawyerDetails::class, 'lawyer_id', 'id');
+    }
+
+
 }

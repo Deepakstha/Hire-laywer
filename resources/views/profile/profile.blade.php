@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
+        <div class=" d-flex  justify-content-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Profile') }}
+            </h2>
+            <a href="{{route('profile.edit')}}" class="font-semibold text-xl text-gray-800 leading-tight" style="cursor: pointer">
+                {{ __('Edit Profile') }}
+            </a>
+        </div>
     </x-slot>
     <div>
            {{old('name', $user->name)}}
@@ -19,7 +24,7 @@
         <!-- Profile Information Column -->
         <div class="col-md-8">
             <h1>{{ $user->name}}</h1>
-            <p>{{ $user->role}}</p>
+            <p>{{ $user->role}}</p> {{ $user->is_verified ? 'verified' : 'not verified' }}
             <hr>
             
             <!-- Contact Information -->

@@ -10,16 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('lawyer_details', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('role')->nullable();
-            $table->string('image')->nullable();
-            $table->rememberToken();
             $table->timestamps();
+            $table->string('lawyer_card');
+            $table->string('bio');
+            $table->integer('price');
+            $table->boolean('is_verified')->default(false);
+            $table->unsignedBigInteger('lawyer_id');
+            $table->foreign('lawyer_id')->references('id')->on('users');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('lawyer_details');
     }
 };

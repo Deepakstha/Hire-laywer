@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\LawyerDetails;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class RegisteredUserController extends Controller
 {
@@ -37,6 +39,13 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        if (!Storage::exists('images')) {
+            Storage::makeDirectory('images');
+        }
+
+        if (!Storage::exists('documents/lawyers')) {
+            Storage::makeDirectory('documents/lawyers');
+        }
         // Handle the image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -46,24 +55,45 @@ class RegisteredUserController extends Controller
             $imageName = null; // Default image or no image
         }
 
+        if ($request->hasFile('lawyer_card')) {
+            $lawyer_card = $request->file('lawyer_card');
+            $lawyer_card_name = time() . '.' . $lawyer_card->getClientOriginalExtension();
+            $path = $lawyer_card->storeAs('documents/lawyers', $lawyer_card_name, 'public');
+        } else {
+            $lawyer_card_name = null;
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
             'password' => Hash::make($request->password),
-            'image' => $imageName
+            'image' => $imageName,
 
         ]);
+        if ($user->role == 'lawyer') {
+            $lawyerDetails = LawyerDetails::where('lawyer_id', $user->id)->first();
 
-        Log::info(print_r($user, true));
+            // If the lawyer is not in the LawyerDetails table, store it
+            if (!$lawyerDetails) {
+                $lawyerDetails = new LawyerDetails;
+                $lawyerDetails->lawyer_id = $user->id;
+                $lawyerDetails->lawyer_card = $lawyer_card_name;
+                $lawyerDetails->bio = "";
+                $lawyerDetails->price = 0;
+                $lawyerDetails->save();
+            }
+        }
 
-        echo $user;
+
+
+
         event(new Registered($user));
 
         Auth::login($user);
 
         // Check the user's role and redirect accordingly
-        if ($user->role == 'laywer') {
+        if ($user->role == 'lawyer') {
             return redirect(RouteServiceProvider::LAYWER_DASHBOARD);
         } else {
             return redirect(RouteServiceProvider::HOME);

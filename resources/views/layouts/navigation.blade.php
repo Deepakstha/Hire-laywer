@@ -16,10 +16,18 @@
                 </div>
 
                 <!-- Navigation Links -->
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Laywer Dashboard') }}
-                    </x-nav-link>
+                    @if (Auth::check() && Auth::user()->role == 'lawyer')
+                        <x-nav-link :href="route('lawyer-dashboard')" :active="request()->routeIs('lawyer-dashboard')">
+                            {{ __('Lawyer Dashboard') }}
+                        </x-nav-link>
+                    @else
+                        <!-- Add other navigation links for non-lawyer users here -->
+                    @endif
+                    {{-- <x-nav-link :href="route('lawyer-dashboard')" :active="request()->routeIs('lawyer-dashboard')">
+                        {{ __('Lawyer Dashboard') }}
+                    </x-nav-link> --}}
                 </div>
             </div>
 
@@ -75,6 +83,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            
         </div>
 
         <!-- Responsive Settings Options -->

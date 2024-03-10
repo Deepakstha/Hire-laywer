@@ -29,8 +29,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (Auth::user()->role == 'laywer') {
+        if (Auth::user()->role == 'lawyer') {
             return redirect(RouteServiceProvider::LAYWER_DASHBOARD);
+        } elseif (Auth::user()->role == 'admin') {
+            return redirect(RouteServiceProvider::ADMIN_DASHBOARD);
         } else {
             return redirect()->intended(RouteServiceProvider::HOME);
         }
