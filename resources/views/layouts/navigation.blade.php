@@ -8,7 +8,7 @@
                     <a href="{{ route('dashboard') }}">
                     <div >
                 <a href="/">
-                <h1 class="logo me-auto fs-1 text-uppercase fw-bold">Hire Laywers</h1>
+                <h1 class="logo me-auto fs-1 text-uppercase fw-bold">Wakil Sathi</h1>
                     <!-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> -->
                 </a>
             </div>

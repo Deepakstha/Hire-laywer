@@ -1,7 +1,7 @@
 @extends('layouts.clientLayout')
 
 @section('head-section')
-<title>Hire Lawyer</title>
+<title>Wakil Sathi</title>
 <style>
     .profile-picture-container {
     width: 150px; 

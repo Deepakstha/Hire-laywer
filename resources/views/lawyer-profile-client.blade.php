@@ -1,7 +1,7 @@
 @extends('layouts.clientLayout')
 
 @section('head-section')
-<title>Hire Lawyer</title>
+<title>Wakil Sathi</title>
 <style>
     .profile-picture-container {
     width: 150px; 
@@ -29,7 +29,7 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    Hire Lawyer
+                    Wakil Sathi
                 </div>
                 <div class="card-body">
                     @if (session('error'))

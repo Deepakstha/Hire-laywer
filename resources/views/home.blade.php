@@ -1,6 +1,6 @@
 @extends('layouts.clientLayout')
 @section('head-section')
-<title>Hire Lawyer</title>
+<title>wakil Sathi</title>
 @endsection
 <body class="">
 
