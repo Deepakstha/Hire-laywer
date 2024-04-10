@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LawyerController;
@@ -26,8 +27,16 @@ Route::get('/delete-hire-request/{id}', [LawyerController::class, 'deleteHireReq
 Route::get('/book-appointment/{id}', [LawyerController::class, 'displayBookAppointmentForm']);
 Route::post('/book-appointment', [LawyerController::class, 'bookAppointment']);
 Route::get('/ratings', [LawyerController::class, 'lawyer_rating_form'])->middleware((['auth']));
+Route::get('/clients', [LawyerController::class, 'displayClients']);
+Route::get('/appointments', [LawyerController::class, 'displayAppointmentToLawyer']);
+Route::get('/lawyer-appointment', [LawyerController::class, 'displayAppointmentForUser']);
+Route::get('/delete-appointment/{id}', [LawyerController::class, 'deleteAppointment']);
 // Route::get('/hire-lawyer', [LawyerController::class, 'hire_request_lawyer']);
 Route::match(['get', 'post'], '/hire-lawyer', [LawyerController::class, 'hire_request_lawyer']);
+
+Route::get("/message/{id}", [MessageController::class, 'fetchMessages']);
+Route::get("/send-message", [MessageController::class, 'sendMessage']);
+Route::get("/lawyer-message", [LawyerController::class, 'displayClientsForMessage']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

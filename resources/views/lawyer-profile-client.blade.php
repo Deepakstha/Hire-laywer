@@ -57,6 +57,7 @@
                         <button type="submit" class="btn btn-primary">Request to Hire</button>
                     </form>
                     <a href="/book-appointment/{{$lawyers->id}}" class="btn btn-secondary">Book Appointment</a>
+                    <a href="/message/{{$lawyers->id}}" class="btn btn-secondary">Message</a>
                 </div>
             </div>
 

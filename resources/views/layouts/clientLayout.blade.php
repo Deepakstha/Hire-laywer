@@ -46,7 +46,16 @@
                 @if (Route::has('login'))
                     <div >
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="get-started-btn">Dashboard</a>
+
+                            @if (Auth::user()->role == 'lawyer')
+                            <a href="{{ url('/lawyer-dashboard') }}" class="get-started-btn">Lawyer Dashboard</a>
+                            @endif
+                            @if (Auth::user()->role == 'admin')
+                            <a href="{{ url('/admin-dashboard') }}" class="get-started-btn">Admin Dashboard</a>
+                            @endif
+                            @if (Auth::user()->role == 'client')
+                            <a href="{{ url('/lawyer-appointment') }}" class="get-started-btn">Appointments</a>
+                            @endif
                             
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                               @csrf
